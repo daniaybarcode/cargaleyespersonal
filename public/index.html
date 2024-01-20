@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Página Principal</title>
+</head>
+<body>
+  <h1>Leyes</h1>
+  <button onclick="window.location.href='/alta.html'">Alta de Ley</button>
+  <button onclick="window.location.href='/modificacion.html'">Modificación de Ley</button>
+  <div id="leyes"></div>
+
+  <script>
+    fetch('/laws')
+      .then(response => response.json())
+      .then(data => {
+        const leyDiv = document.getElementById('leyes');
+        leyDiv.innerHTML = '<h2>Listado de Leyes</h2>';
+        for (const category in data) {
+          for (const type in data[category]) {
+            leyDiv.innerHTML += `<p><strong>${category} - ${type}:</strong> ${data[category][type].join(', ')}</p>`;
+          }
+        }
+      });
+  </script>
+</body>
+</html>
